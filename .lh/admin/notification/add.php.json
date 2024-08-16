@@ -1,0 +1,22 @@
+{
+    "sourceFile": "admin/notification/add.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1723810405300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1723811102276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,30 @@\n+<?php\r\n+\r\n+include \"../../connect.php\";\r\n+include '../../functions.php';\r\n+\r\n+\r\n+$userid =filterRequest(\"userid\");\r\n+$title =filterRequest(\"title\");\r\n+$body =filterRequest(\"body\");\r\n+$now =date(\"Y-m-d H:i:s\");\r\n+$imagename= imageUpload(\"../../upload/notefication\",\"file\");\r\n+\r\n+\r\n+\r\n+\r\n+\r\n+\r\n+\r\n+\r\n+\r\n+$data= array(\r\n+    \"notification_title\"=>$title,\r\n+    \"notification_body\"=>$body,\r\n+    \"notification_image\"=>$imagename,\r\n+    \"notification_datetime\"=>$now,\r\n+    \"notification_userid\"=>$userid,\r\n+\r\n+\r\n+        );\r\n+        insertData(\"notification\", $data);\r\n"
+                }
+            ],
+            "date": 1723810405300,
+            "name": "Commit-0",
+            "content": "<?php\r\n\r\ninclude \"../../connect.php\";\r\ninclude '../../functions.php';\r\n\r\n\r\n$userid =filterRequest(\"userid\");\r\n$title =filterRequest(\"title\");\r\n$body =filterRequest(\"body\");\r\n$now =date(\"Y-m-d H:i:s\");\r\n$imagename= imageUpload(\"../../upload/notefication\",\"file\");\r\n\r\n\r\n$data= array(\r\n    \"notification_title\"=>$title,\r\n    \"notification_body\"=>$body,\r\n    \"notification_image\"=>$imagename,\r\n    \"notification_datetime\"=>$now,\r\n    \"notification_userid\"=>$userid,\r\n\r\n\r\n        );\r\n        insertData(\"notification\", $data);\r\n"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "admin/orders/viewaccepted.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1723810779284,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1723810779284,
+            "name": "Commit-0",
+            "content": "<!-- <?php\r\n\r\n\r\ninclude \"../../connect.php\";\r\ninclude '../../functions.php';\r\n\r\n// getAllData('ordersview', \"1=1  AND orders_status != 0 AND orders_status != 4\"); -->"
+        }
+    ]
+}
