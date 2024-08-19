@@ -2,6 +2,6 @@
 include "../../connect.php";
 include '../../functions.php';
 
- $Table="categories";
+ $Table="size";
 getAllData($Table);
 // admin\categories\view.php

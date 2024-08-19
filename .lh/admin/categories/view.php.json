@@ -1,0 +1,26 @@
+{
+    "sourceFile": "admin/categories/view.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1723832684759,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1723837233754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n <?php\r\n include \"../../connect.php\";\r\n include '../../functions.php';\r\n \r\n- $Table=\"categories\";\r\n+ $Table=\"size\";\r\n getAllData($Table);\r\n // admin\\categories\\view.php\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1723837242048,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n <?php\r\n include \"../../connect.php\";\r\n include '../../functions.php';\r\n \r\n- $Table=\"size\";\r\n+ $Table=\"categories\";\r\n getAllData($Table);\r\n // admin\\categories\\view.php\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1723832684759,
+            "name": "Commit-0",
+            "content": "<?php\r\ninclude \"../../connect.php\";\r\ninclude '../../functions.php';\r\n\r\n $Table=\"categories\";\r\ngetAllData($Table);\r\n// admin\\categories\\view.php"
+        }
+    ]
+}

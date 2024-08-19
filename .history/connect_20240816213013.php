@@ -1,7 +1,3 @@
-
-
-
-
 <?php
 $dsn = "mysql:host=localhost;dbname=e-ecommerse";
 $user = "root";

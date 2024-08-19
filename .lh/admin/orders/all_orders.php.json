@@ -1,0 +1,18 @@
+{
+    "sourceFile": "admin/orders/all_orders.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1723886793265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1723886793265,
+            "name": "Commit-0",
+            "content": "<?php\r\n\r\n\r\ninclude \"../../connect.php\";\r\ninclude '../../functions.php';\r\n\r\ngetAllData('ordersview', \"1=1\");"
+        }
+    ]
+}

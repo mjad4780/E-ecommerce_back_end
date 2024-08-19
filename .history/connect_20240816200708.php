@@ -1,7 +1,3 @@
-
-
-
-
 <?php
 $dsn = "mysql:host=localhost;dbname=e-ecommerse";
 $user = "root";
@@ -12,7 +8,7 @@ $option = array(
 $countrowinpage = 9;
 try {
    $con = new PDO($dsn, $user, $pass, $option);
-   $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, PDO::ERRMODE_EXCEPTION);
+   $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    header("Access-Control-Allow-Origin: *");
    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Access-Control-Allow-Origin");
    header("Access-Control-Allow-Methods: POST, OPTIONS , GET");

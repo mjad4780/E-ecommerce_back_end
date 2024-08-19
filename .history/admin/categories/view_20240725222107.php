@@ -4,4 +4,3 @@ include '../../functions.php';
 
  $Table="categories";
 getAllData($Table);
-// admin\categories\view.php

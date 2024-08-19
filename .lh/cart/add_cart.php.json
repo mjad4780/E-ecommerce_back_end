@@ -1,0 +1,22 @@
+{
+    "sourceFile": "cart/add_cart.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1724062766787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1724063063964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \r\n $data= array(\r\n     'cart_itemid'=> $itemid,\r\n     'cart_userid'=> $userid,\r\n-    'cart_size'=> $color,\r\n+    'cart_size'=> $size,\r\n     'cart_color'=> $color,\r\n \r\n \r\n \r\n"
+                }
+            ],
+            "date": 1724062766787,
+            "name": "Commit-0",
+            "content": "\r\n<?php\r\ninclude \"../connect.php\";\r\ninclude '../functions.php';\r\n$itemid =filterRequest(\"itemid\");\r\n$userid =filterRequest(\"userid\");\r\n$size =filterRequest(\"size\");\r\n$color =filterRequest(\"color\");\r\n\r\n$data= array(\r\n    'cart_itemid'=> $itemid,\r\n    'cart_userid'=> $userid,\r\n    'cart_size'=> $color,\r\n    'cart_color'=> $color,\r\n\r\n\r\n\r\n);\r\ninsertData('cart',$data);"
+        }
+    ]
+}

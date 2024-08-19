@@ -10,7 +10,7 @@ $color =filterRequest("color");
 $data= array(
     'cart_itemid'=> $itemid,
     'cart_userid'=> $userid,
-    'cart_size'=> $size,
+    'cart_size'=> $color,
     'cart_color'=> $color,
 
 

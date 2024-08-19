@@ -1,0 +1,18 @@
+{
+    "sourceFile": "admin/orders/viewdetails.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1724063062108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1724063062108,
+            "name": "Commit-0",
+            "content": "<?php\r\n\r\n\r\ninclude \"../../connect.php\";\r\ninclude '../../functions.php';\r\n$product = [];\r\n$product['status']=\"success\";\r\n\r\n$orderid =filterRequest(\"id\");\r\n\r\n\r\n$sql = \"SELECT * FROM `ordersdetailasview` WHERE cart_orders = '$orderid' \";\r\n$stmt =  $con->query($sql);\r\n$stmt->execute();\r\n\r\n$data = $stmt->fetchAll(PDO::FETCH_ASSOC);\r\n// echo json_encode($data);\r\n\r\nfor ($i=0; $i <count($data) ; $i++) { \r\n    $item_id =  $data[$i]['item_id'];\r\n    $item_name = $data[$i]['item_name'];\r\n    $item_name_ar = $data[$i]['item_name_ar'];\r\n    $item_decs = $data[$i]['item_decs'];\r\n    $item_decs_ar = $data[$i]['item_decs_ar'];\r\n    $item_image = $data[$i]['item_image'];\r\n    $item_count = $data[$i]['item_count'];\r\n    $item_active = $data[$i]['item_active'];\r\n    $item_price = $data[$i]['item_price'];\r\n    $item_discount = $data[$i]['item_discount'];\r\n    $item_i = $data[$i]['item_data'];\r\n    $item_categories = $data[$i]['item_categories'];\r\n       $items_prices= $data[$i]['items_prices'];\r\n    $itemprice_discount=$data[$i]['itemprice_discount'];\r\n    $countitems=$data[$i]['countitems'];\r\n    $cart_id=$data[$i]['cart_id'];\r\n    $cart_itemid=$data[$i]['cart_itemid'];\r\n    $cart_userid=$data[$i]['cart_userid'];\r\n    $cart_orders=$data[$i]['cart_orders'];\r\n    $cart_size=$data[$i]['cart_size'];\r\n    $cart_color=$data[$i]['cart_color'];\r\n    $images = [];\r\n    $Size = [];\r\n\r\n$sql = \"SELECT * FROM `detailas`WHERE item_deitalis = '$item_id'\";\r\n$result =  $con->query($sql);\r\n\r\n\r\n$ff=$result->fetchAll(PDO::FETCH_ASSOC);\r\n\r\n    foreach ($ff as $index) {\r\n    $images[] = $index['detailas_image'];\r\n        $detailas_size = $index['detailas_size'];\r\n        $quantity = $index['quantity'];\r\n        $color = $index['color'];\r\n        $id = $index['detailas_id'];\r\n\r\n        $Size[]=[  'id'=>$id , 'size'=>$detailas_size,'quantity'=>$quantity,'color'=>$color];\r\n    }\r\n\r\n$itemData=array(\r\n    'item_id' => $item_id,\r\n    'item_name' => $item_name,\r\n    'item_name_ar' => $item_name_ar,\r\n    'item_decs' => $item_decs,\r\n    'item_decs_ar' => $item_decs_ar,\r\n    'item_image' => $item_image,\r\n    'item_count' => $item_count,\r\n    'item_active' => $item_active,\r\n    'item_price' => $item_price,\r\n    'item_discount' => $item_discount,\r\n    'item_data' => $item_i,\r\n    'item_categories' => $item_categories,\r\n    \"items_prices\"=> $items_prices,\r\n    \"itemprice_discount\"=>$itemprice_discount,\r\n    \"countitems\"=>$countitems,\r\n    \"cart_id\"=>$cart_id,\r\n    \"cart_itemid\"=>$cart_itemid,\r\n    \"cart_userid\"=>$cart_userid,\r\n    \"cart_orders\"=>$cart_orders,\r\n    'cart_size'=> $cart_size,\r\n    'cart_color'=> $cart_color,\r\n    'images'=>$images,\r\n    'size'=>$Size,\r\n);\r\n$product ['data'][]= $itemData;\r\n\r\n}\r\n\r\necho json_encode($product);"
+        }
+    ]
+}
