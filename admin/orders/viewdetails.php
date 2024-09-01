@@ -38,6 +38,8 @@ for ($i=0; $i <count($data) ; $i++) {
     $cart_orders=$data[$i]['cart_orders'];
     $cart_size=$data[$i]['cart_size'];
     $cart_color=$data[$i]['cart_color'];
+    $player_id=$data[$i]['player_id'];
+
     $images = [];
     $Size = [];
 
@@ -79,6 +81,7 @@ $itemData=array(
     "cart_orders"=>$cart_orders,
     'cart_size'=> $cart_size,
     'cart_color'=> $cart_color,
+    'player_id'=>$player_id,
     'images'=>$images,
     'size'=>$Size,
 );

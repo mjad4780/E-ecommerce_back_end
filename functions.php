@@ -63,6 +63,7 @@ function getData($table, $where = null, $ww=false,$values = null,$json=true,)
             // echo json_encode(array("data" => $data['item_id']));
 
         }else {
+            
         }
         echo json_encode(array("status" => "success", "data" => $data));
 
@@ -241,7 +242,8 @@ function sendGCM($title, $message, $topic, $pageid, $pagename,$image)
             "title" =>  $title,
             "click_action" => "FLUTTER_NOTIFICATION_CLICK",
             "sound" => "default",
-            "imageUrl"=>$image
+      
+            "image"=>$image
 
         ),
         'data' => array(
@@ -274,7 +276,9 @@ function insertNotify($title, $body, $userid,$topic,$pageid,$pagename)
     global $con;
     $stmt=$con->prepare("INSERT INTO `notification`(`notification_userid`, `notification_title`, `notification_body`,) VALUES (?,?,?)");
    $stmt->execute(array($userid,$title,$body));
-   sendGCM($title,$body,$topic,$pageid,$pagename,'');
+
+
+//    sendGCM($title,$body,$topic,$pageid,$pagename,'');
    $count =$stmt->rowCount();
    result($count,'Sorry try agin')   ;
 
@@ -282,11 +286,11 @@ function insertNotify($title, $body, $userid,$topic,$pageid,$pagename)
 }
 
 
-function insertNotifyimage($title, $body, $userid,$topic,$pageid,$pagename,$image)
+function insertNotifyimage($title, $body, $All,$topic,$pageid,$pagename,$image,$data)
 {
     global $con;
-    $stmt=$con->prepare("INSERT INTO `notification`(`notification_userid`, `notification_title`, `notification_body`,notification_image) VALUES (?,?,?,?)");
-   $stmt->execute(array($userid,$title,$body,$image));
+    $stmt=$con->prepare("INSERT INTO `notification`(`notification_all`, `notification_title`, `notification_body`,`notification_image`,`notification_datetime`) VALUES (?,?,?,?,?)");
+   $stmt->execute(array($All,$title,$body,$image,$data));
    sendGCM($title,$body,$topic,$pageid,$pagename,$image);
    $count =$stmt->rowCount();
    result($count,'Sorry try agin')   ;
@@ -375,3 +379,49 @@ function addListDetailas($String,$imageNames,$id){
   
   }
 
+
+
+
+ function pushNotificationId($title,$body,$now,$pleyerId,$userid,$image='https://letsenhance.io/static/03620c83508fc72c6d2b218c7e304ba5/11499/UpscalerAfter.jpg')
+{
+        global $con;
+    
+        $headings = array(
+            "en" => $title // عنوان الإشعار
+        );
+        $content = array(
+            "en" =>$body
+            );
+    
+        $fields = array(
+            'app_id' => "9c37a804-6bb8-4055-96f4-a56308ae8b63",
+            "include_player_ids"=>array($pleyerId) , // هنا يتم تحديد المستخدم بواسطة Device Token
+            // "2bbb5b65-5cd4-4fc7-bbfb-ee58659c8674"
+            // 'included_segments' => array('All'),
+            'data' => array("foo" => "bar"),
+            'large_icon' =>"ic_launcher_round.png",
+            'headings'=>$headings,
+            'contents' => $content,
+            'big_picture' => $image,  // الصورة الكبيرة للإشعار في Android
+    
+        );
+    
+        $fields = json_encode($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+                                                   'Authorization: Basic YTBiZmZhY2QtYjJkYS00Zjc4LWI5MWUtMTg2MTA0ZTJkNzhh'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);    
+    echo json_encode($ch);
+        $response = curl_exec($ch);
+        $stmt=$con->prepare("INSERT INTO `notification`(`notification_userid`, `notification_title`, `notification_body`,`notification_image`,`notification_datetime`) VALUES (?,?,?,?,?,)");
+       $stmt->execute(array($userid,$title,$body,$image,$now));
+       $count =$stmt->rowCount();
+        curl_close($ch);
+        result($count,'Sorry try agin')   ;
+
+}

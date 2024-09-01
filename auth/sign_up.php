@@ -29,5 +29,6 @@ $verfiycode =rand(10000, 99999);//بيختار رقم عشواءي
         // verfiycodeهنا المفروض بعد مايدخل الشخص بياناته يبعت رساله الي ايميله يوجد فيها
         // sendemail($email ,"verfiy code e-ecommerse", "verfiy Code $verfiycode");
             insertData("user", $data);
-  
+          
+
  }

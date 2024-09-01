@@ -1,0 +1,18 @@
+{
+    "sourceFile": "admin/orders/prepare.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1724067402529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1724067402529,
+            "name": "Commit-0",
+            "content": "\r\n\r\n<?php\r\ninclude \"../../connect.php\";\r\ninclude '../../functions.php';\r\n\r\n$orderid =filterRequest(\"orderid\");\r\n$userid =filterRequest(\"userid\");\r\n$type =filterRequest(\"type\");\r\nif ($type ==0) {\r\n    $data=array(\"orders_status\"=> 2);\r\n    \r\n} else {\r\n        $data=array(\"orders_status\"=> 4);\r\n            \r\n       }\r\n\r\nupdateData(\"orders\",$data,\"orders_id =$orderid AND orders_status = 1\");\r\n// insertNotify(\"success\", \"Your order has been approved\",$userid,\"users$userid\",\"none\",\"none\");\r\n// if ($type ==0) {\r\n//     sendGCM(\"waaring\", \"there is a order awaiting approval\",\"delivery\",\"none\",\"none\",\"image\");\r\n\r\n// }\r\n\r\n\r\n\r\n\r\n\r\n\r\n  \r\n"
+        }
+    ]
+}
