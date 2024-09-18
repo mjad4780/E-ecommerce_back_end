@@ -8,7 +8,8 @@ $allData= [];
 
 
 
-$sql = "SELECT * FROM `item1view`";
+$sql = "SELECT items.* ,categories.*,item_price  - ( item_price*item_discount/ 100) AS itemprice_discount FROM items 
+INNER JOIN categories on items.item_categories= categories.categories_id ";
 $stmt =  $con->query($sql);
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

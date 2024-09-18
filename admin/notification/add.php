@@ -53,9 +53,10 @@ $data=json_decode($response,true);
     $stmt=$con->prepare("INSERT INTO `notification`(`notification_all`, `notification_title`, `notification_body`,`notification_image`,`notification_datetime`,`notification_id_signal`) VALUES (1,?,?,?,?,?)");
    $stmt->execute(array($title,$body,$image,$now,$data['id']));
    $count =$stmt->rowCount();
+   curl_close($ch);
+
    result($count,'Sorry try agin')   ;
 
-    curl_close($ch);
 
 }
 

@@ -1,15 +1,19 @@
 <?php
 
 
-include "../../connect.php";
-include '../../functions.php';
+include "../connect.php";
+include '../functions.php';
 $product = [];
 $product['status']="success";
 
 $orderid =filterRequest("id");
 
 
-$sql = "SELECT * FROM `ordersdetailasview` WHERE cart_orders = '$orderid' ";
+$sql = "SELECT SUM(items.item_price) as items_prices  ,  ( item_price  - ( item_price*item_discount/ 100)) AS itemprice_discount , COUNT(cart.cart_itemid)as countitems,cart.*,items.*,orders.*   FROM cart    
+INNER JOIN items ON items.item_id = cart.cart_itemid
+INNER JOIN orders ON orders.orders_id=cart.cart_orders
+WHERE cart_orders =$orderid
+GROUP BY cart.cart_itemid ,cart.cart_userid,cart.cart_orders ";
 $stmt =  $con->query($sql);
 $stmt->execute();
 

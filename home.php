@@ -1,6 +1,7 @@
 <?php
 include 'connect.php';
 include 'functions.php';
+$userid =filterRequest("id");
 
 
 $allData= array();
@@ -16,66 +17,20 @@ $categories= getAllData("categories",null,null, false);
 $allData['categories']= $categories;
 
 
-$productone=[];
 
-$sql = "SELECT * FROM `itemtopselling` WHERE 1=1 ORDER BY countorders DESC  ";
-$stmt =  $con->query($sql);
+$home ="SELECT items.*, categories.*,1 AS favorite ,( item_price - ( item_price*item_discount/ 100)) AS itemprice_discount FROM items
+INNER JOIN favorite ON favorite.favorite_itemsid =items.item_id AND favorite.favorite_userid=$userid
+INNER JOIN categories on items.item_categories= categories.categories_id 
+UNION ALL 
+SELECT *,0 AS favorite ,( item_price -( item_price*item_discount/ 100)) AS itemprice_discount  FROM items
+INNER JOIN categories on items.item_categories= categories.categories_id 
+WHERE  item_id NOT IN(SELECT items.item_id FROM items                                             
+INNER JOIN favorite ON favorite.favorite_itemsid =items.item_id AND favorite.favorite_userid=$userid )";
 
-$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-for ($i=0; $i <count($data) ; $i++) { 
-    $item_id =  $data[$i]['item_id'];
-    $images = [];
-    $Size = [];
-
-$sql = "SELECT * FROM `detailas`WHERE item_deitalis = '$item_id'";
-$result =  $con->query($sql);
-
-
-$ff=$result->fetchAll(PDO::FETCH_ASSOC);
-
-    foreach ($ff as $index) {
-    $images[] = $index['detailas_image'];
-        $detailas_size = $index['detailas_size'];
-        $quantity = $index['quantity'];
-        $color = $index['color'];
-        $id = $index['detailas_id'];
-
-        $Size[]=[  'id'=>$id , 'size'=>$detailas_size,'quantity'=>$quantity,'color'=>$color];
-    }
-
-$itemData=[
-    'item_id' => $item_id,
-    'item_name' => $data[$i]['item_name'],
-    'item_name_ar' => $data[$i]['item_name_ar'],
-    'item_decs' => $data[$i]['item_decs'],
-    'item_decs_ar' => $data[$i]['item_decs_ar'],
-    'item_image' => $data[$i]['item_image'],
-    'item_count' => $data[$i]['item_count'],
-    'item_active' => $data[$i]['item_active'],
-    'item_price' => $data[$i]['item_price'],
-    'item_discount' => $data[$i]['item_discount'],
-    'item_data' => $data[$i]['item_data'],
-    'item_categories' => $data[$i]['item_categories'],
-    "itemprice_discount"=>$data[$i]['itemprice_discount'],
-    "countorders"=>$data[$i]['countorders'],
-    "cart_id"=>$data[$i]['cart_id'],
-    "cart_itemid"=>$data[$i]['cart_itemid'],
-    "cart_userid"=>$data[$i]['cart_userid'],
-    "cart_orders"=>$data[$i]['cart_orders'],
-    'images'=>$images,
-    'size'=>$Size,
-];
-$productone[]=$itemData;
-
-
-}
-
-$allData['itemtopselling']=$productone;
 
 $product=[];
-$sql = "SELECT * FROM `item1view` WHERE item_discount != 0  ";
-$stmt =  $con->query($sql);
+
+$stmt =  $con->query($home);
 
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -113,14 +68,108 @@ $itemData=[
     'item_discount' => $data[$i]['item_discount'],
     'item_data' => $data[$i]['item_data'],
     'item_categories' => $data[$i]['item_categories'],
+    'favorite'=>$data[$i]['favorite'],
+    'categories_id'=>$data[$i]['categories_id'],
+    'categories_name'=>$data[$i]['categories_name'],
+    'itemprice_discount'=>$data[$i]['itemprice_discount'],
     'images'=>$images,
     'size'=>$Size,
 ];
-$product[]=$itemData;
+$product['data'][]=$itemData;
 
 
 }
 $allData['item1view']=$product;
 
 
+
+
 echo json_encode($allData);
+
+
+
+// ZEbv7eUbfvh9cai
+//ahC4Xb3DrrPP8T@
+
+
+
+// $stmt =$con->prepare("SELECT items.*, categories.*,1 AS favorite ,( item_price - ( item_price*item_discount/ 100)) AS itemprice_discount FROM items
+// INNER JOIN favorite ON favorite.favorite_itemsid =items.item_id
+// INNER JOIN categories on items.item_categories= categories.categories_id 
+// WHERE item_discount != 0
+// UNION ALL 
+// SELECT *,0 AS favorite ,( item_price -( item_price*item_discount/ 100)) AS itemprice_discount  FROM items
+// INNER JOIN categories on items.item_categories= categories.categories_id 
+// WHERE    item_discount != 0 AND   item_id NOT IN(SELECT items.item_id FROM items                                             
+// INNER JOIN favorite ON favorite.favorite_itemsid =items.item_id )");
+// $stmt->execute();
+// // $count  = $stmt->rowCount();
+
+
+
+
+// $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// for ($i=0; $i <count($data) ; $i++) { 
+//     $item_id =  $data[$i]['item_id'];
+//     $item_name = $data[$i]['item_name'];
+//     $item_name_ar = $data[$i]['item_name_ar'];
+//     $item_decs = $data[$i]['item_decs'];
+//     $item_decs_ar = $data[$i]['item_decs_ar'];
+//     $item_image = $data[$i]['item_image'];
+//     $item_count = $data[$i]['item_count'];
+//     $item_active = $data[$i]['item_active'];
+//     $item_price = $data[$i]['item_price'];
+//     $item_discount = $data[$i]['item_discount'];
+//     $item_i = $data[$i]['item_data'];
+//     $item_categories = $data[$i]['item_categories'];
+//     $categories_id = $data[$i]['categories_id'];
+// $categories_name = $data[$i]['categories_name'];
+// $favorite = $data[$i]['favorite'];
+// $itemprice_discount = $data[$i]['itemprice_discount'];
+
+//     $images = [];
+//     $Size = [];
+
+// $sql = "SELECT * FROM `detailas`WHERE item_deitalis = '$item_id'";
+// $result =  $con->query($sql);
+
+
+// $ff=$result->fetchAll(PDO::FETCH_ASSOC);
+
+//     foreach ($ff as $index) {
+//         $images[] = $index['detailas_image'];
+//         $detailas_size = $index['detailas_size'];
+//         $quantity = $index['quantity'];
+//         $color = $index['color'];
+//         $id = $index['detailas_id'];
+
+//         $Size[]=[  'id'=>$id , 'size'=>$detailas_size,'quantity'=>$quantity,'color'=>$color];
+//     }
+
+// $itemData=[
+//     'item_id' => $item_id,
+//     'item_name' => $item_name,
+//     'item_name_ar' => $item_name_ar,
+//     'item_decs' => $item_decs,
+//     'item_decs_ar' => $item_decs_ar,
+//     'item_image' => $item_image,
+//     'item_count' => $item_count,
+//     'item_active' => $item_active,
+//     'item_price' => $item_price,
+//     'item_discount' => $item_discount,
+//     'item_data' => $item_i,
+//     'item_categories' => $item_categories,
+//     'categories_id'=>$categories_id,
+//     'categories_name'=>$categories_name,
+//     'favorite'=>$favorite,
+//     'itemprice_discount'=>$itemprice_discount,
+
+//     'images'=>$images,
+//     'size'=>$Size,
+// ];
+
+//     $productofers[]=$itemData;
+// }
+
+
+// $allData['offers']=$productofers;

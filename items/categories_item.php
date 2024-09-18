@@ -5,19 +5,20 @@
 include "../connect.php";
 include '../functions.php';
 $product = [];
-$product['status']="success";
 
 $categoriesid =filterRequest("id");
 $userid =filterRequest("userid");
 // وخلي قيمتها ب1favoriteالهدف منها  هاتلي كل العناصر الا مضافه في  
 // وخلي قيمتها بي  0favoriteوهاتلي كل العناصر الا مش مضافه في 
-$stmt =$con->prepare("SELECT item1view.*,1 AS favorite ,( item_price - ( item_price*item_discount/ 100)) AS itemprice_discount FROM item1view
-INNER JOIN favorite ON favorite.favorite_itemsid =item1view.item_id AND favorite.favorite_userid=$userid
+$stmt =$con->prepare("SELECT items.*, categories.*,1 AS favorite ,( item_price - ( item_price*item_discount/ 100)) AS itemprice_discount FROM items
+INNER JOIN favorite ON favorite.favorite_itemsid =items.item_id AND favorite.favorite_userid=$userid
+INNER JOIN categories on items.item_categories= categories.categories_id 
 WHERE categories_id =$categoriesid
 UNION ALL 
-SELECT *,0 AS favorite ,( item_price -( item_price*item_discount/ 100)) AS itemprice_discount    FROM item1view
-WHERE    categories_id =$categoriesid AND item_id NOT IN(SELECT item1view.item_id FROM item1view
-INNER JOIN favorite ON favorite.favorite_itemsid =item1view.item_id AND favorite.favorite_userid=$userid)");
+SELECT *,0 AS favorite ,( item_price -( item_price*item_discount/ 100)) AS itemprice_discount  FROM items
+INNER JOIN categories on items.item_categories= categories.categories_id 
+WHERE  categories_id =$categoriesid AND   item_id NOT IN(SELECT items.item_id FROM items                                             
+INNER JOIN favorite ON favorite.favorite_itemsid =items.item_id AND favorite.favorite_userid=$userid )");
 $stmt->execute();
 // $count  = $stmt->rowCount();
 

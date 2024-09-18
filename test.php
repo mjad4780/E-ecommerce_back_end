@@ -86,3 +86,4 @@ include 'functions.php';
 
 //     return $result;
 // }
+getAllData('user');

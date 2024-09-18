@@ -12,4 +12,4 @@ $data=array(
 );
 
 
-insertData('myfavorite',$data);
+insertData('favorite',$data);

@@ -24,9 +24,7 @@ CREATE OR REPLACE VIEW myfavorite AS
 // معني هذا السطر بينشا صفحه وهميه فيها الربط بين جدولين
 
 SELECT favorite.* ,items.* ,user.user_id FROM favorite
-// وuser.user_id itemsوfavoriteهاتلي من جدول 
 INNER JOIN user ON user.user_id =favorite.favorite_userid
-// الا خاصه بهfavoriteله userوهنا نكتب العلاقات بين الجداول لانه كل 
 INNER JOIN items ON items.item_id =favorite.favorite_itemsid
 
 //
@@ -107,3 +105,12 @@ JOIN size  ON items.item_id = size.id
 
 ////////////////////////////////sunorders///////////////
 SELECT  SUM(orders_status= 0) as TotalPending,    SUM(orders_status= 1) as TotalApprove , SUM(orders_status= 2) as TotalPrepare,SUM(orders_status= 3) as TotalShipped,SUM(orders_status= 4) as TotalDone ,SUM(orders_status= 5) as TotalCancel FROM `orders` WHERE 1
+///////////////////////////////// item and favorite and home
+SELECT items.*, categories.*,1 AS favorite ,( item_price - ( item_price*item_discount/ 100)) AS itemprice_discount FROM items
+INNER JOIN favorite ON favorite.favorite_itemsid =items.item_id AND favorite.favorite_userid=104
+INNER JOIN categories on items.item_categories= categories.categories_id 
+UNION ALL 
+SELECT *,0 AS favorite ,( item_price -( item_price*item_discount/ 100)) AS itemprice_discount  FROM items
+INNER JOIN categories on items.item_categories= categories.categories_id 
+WHERE  item_id NOT IN(SELECT items.item_id FROM items                                             
+INNER JOIN favorite ON favorite.favorite_itemsid =items.item_id AND favorite.favorite_userid=104 )

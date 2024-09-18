@@ -31,6 +31,7 @@ function getAllData($table, $where = null, $values = null,$json= true)
         if ($count > 0){
             echo json_encode(array("status" => "success", "data" => $data));
         } else 
+
         {
                  printfailer('Sorry try agin');
 
@@ -38,7 +39,7 @@ function getAllData($table, $where = null, $values = null,$json= true)
         return $count;
     }else {
         if ($count > 0){
-         return array("status" => "success","data"=>$data); 
+         return $data; 
         } else {
        return     printfailer('Sorry try agin');
 
@@ -418,10 +419,51 @@ function addListDetailas($String,$imageNames,$id){
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);    
     echo json_encode($ch);
         $response = curl_exec($ch);
-        $stmt=$con->prepare("INSERT INTO `notification`(`notification_userid`, `notification_title`, `notification_body`,`notification_image`,`notification_datetime`) VALUES (?,?,?,?,?,)");
-       $stmt->execute(array($userid,$title,$body,$image,$now));
+        $data=json_decode($response,true);
+
+        $stmt=$con->prepare("INSERT INTO `notification`(`notification_userid`, `notification_title`, `notification_body`,`notification_image`,`notification_datetime`,`notification_id_signal`) VALUES (?,?,?,?,?,?)");
+       $stmt->execute(array($userid,$title,$body,$image,$now,$data['id']));
        $count =$stmt->rowCount();
+       result($count,'Sorry try agin')   ;
+
         curl_close($ch);
-        result($count,'Sorry try agin')   ;
+
+}
+
+function getAllData2($table, $where = null, $values = null,$json= true)
+{
+    global $con;
+    $data = array();
+    if ($where == null) {
+        $stmt = $con->prepare("$table");
+    }else {
+        $stmt = $con->prepare("$table WHERE $where ");
+
+    }
+
+
+
+
+    $stmt->execute($values);
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $count  = $stmt->rowCount();
+    if ($json ==true) {
+        if ($count > 0){
+            echo json_encode(array("status" => "success", "data" => $data));
+        } else 
+        {
+                 printfailer('Sorry try agin');
+
+        }
+        return $count;
+    }else {
+        if ($count > 0){
+         return array("status" => "success","data"=>$data); 
+        } else {
+       return     printfailer('Sorry try agin');
+
+        }
+
+    }
 
 }

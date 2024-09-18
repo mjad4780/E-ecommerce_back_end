@@ -1,5 +1,6 @@
 <?php
 include "../connect.php";
+// include '../../functions.php';
 include '../functions.php';
 
 $search =filterRequest('search');
@@ -8,7 +9,8 @@ $product = [];
 
 
 
-$stmt =$con->prepare("SELECT  * FROM item1view WHERE item_name LIKE'%$search%' OR item_name_ar LIKE'%$search%'");
+$stmt =$con->prepare("SELECT items.* ,categories.*,item_price  - ( item_price*item_discount/ 100) AS itemprice_discount FROM items 
+INNER JOIN categories on items.item_categories= categories.categories_id WHERE item_name LIKE'%$search%' OR item_name_ar LIKE'%$search%'");
 $stmt->execute();
 // $count  = $stmt->rowCount();
 
@@ -29,6 +31,9 @@ for ($i=0; $i <count($data) ; $i++) {
     $item_discount = $data[$i]['item_discount'];
     $item_i = $data[$i]['item_data'];
     $item_categories = $data[$i]['item_categories'];
+    $categories_id = $data[$i]['categories_id'];
+    $categories_name = $data[$i]['categories_name'];
+    $itemprice_discount = $data[$i]['itemprice_discount'];
 
     $images = [];
     $Size = [];
@@ -62,11 +67,14 @@ $itemData=[
     'item_discount' => $item_discount,
     'item_data' => $item_i,
     'item_categories' => $item_categories,
+    'categories_id'=>$categories_id,
+    'categories_name'=>$categories_name,
+    'itemprice_discount'=>$itemprice_discount,
     'images'=>$images,
     'size'=>$Size,
 ];
 
-    $product[]=$itemData;
+    $product['data'][]=$itemData;
 }
 
 
@@ -74,3 +82,8 @@ $itemData=[
 
 
 echo json_encode($product);
+
+
+
+
+
