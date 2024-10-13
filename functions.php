@@ -194,7 +194,7 @@ function checkAuthenticate()
 
 function printfailer($messege= 'none')
 {
-    echo json_encode(array("status"=> 700, "messege"=> $messege));
+    echo json_encode(array("status"=> 'dd', "messege"=> $messege));
 }
 
 function printSuccess($messege= 'none')
@@ -417,14 +417,14 @@ function addListDetailas($String,$imageNames,$id){
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);    
-    echo json_encode($ch);
+    // echo json_encode($ch);
         $response = curl_exec($ch);
         $data=json_decode($response,true);
 
         $stmt=$con->prepare("INSERT INTO `notification`(`notification_userid`, `notification_title`, `notification_body`,`notification_image`,`notification_datetime`,`notification_id_signal`) VALUES (?,?,?,?,?,?)");
        $stmt->execute(array($userid,$title,$body,$image,$now,$data['id']));
        $count =$stmt->rowCount();
-       result($count,'Sorry try agin')   ;
+    //    result($count,'Sorry try agin')   ;
 
         curl_close($ch);
 
@@ -435,9 +435,9 @@ function getAllData2($table, $where = null, $values = null,$json= true)
     global $con;
     $data = array();
     if ($where == null) {
-        $stmt = $con->prepare("$table");
+            $stmt = $con->prepare("$table");
     }else {
-        $stmt = $con->prepare("$table WHERE $where ");
+       $stmt = $con->prepare("$table WHERE $where ");
 
     }
 

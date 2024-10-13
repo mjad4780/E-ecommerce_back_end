@@ -5,7 +5,7 @@ include '../functions.php';
 
 $email =filterRequest("email");
 
-$password=sha1($_POST["password"]);
+$password=filterRequest("password");
 
 getData('user',"user_email='$email' AND  password='$password'");
 

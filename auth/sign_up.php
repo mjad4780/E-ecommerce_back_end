@@ -5,7 +5,7 @@ include '../functions.php';
 
 
 $username =filterRequest("username");
-$password =sha1($_POST["password"]);
+$password =filterRequest("password");
 $email =filterRequest("email");
 $phone =filterRequest("phone");
 $verfiycode =rand(10000, 99999);//بيختار رقم عشواءي

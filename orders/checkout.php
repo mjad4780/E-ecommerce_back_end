@@ -11,20 +11,31 @@ $pricedelivery =filterRequest("pricedelivery");
 $orderprice =filterRequest("orderprice");
 $couponid =filterRequest("couponid");
 $paymentmethod =filterRequest("paymentmethod");
-$coupondiscount =filterRequest("coupondiscount");
-if ($ordertype =='1') {
+$playerId =filterRequest("playerId");
+
+
+
+if ($ordertype ==1) {
 $pricedelivery =0;
 }
 
 $TotalPrice =$orderprice+$pricedelivery;
-$now =date("Y-m-d H:i:s");
-$checkcoupon=getData('coupon',"coupon_id ='$couponid'  AND coupon_data <'$now' AND copon_endDate >'$now'  AND coupon_count > 0  AND copon_maxuser > 0 ",false,null,false);
-// getData('coupon',"coupon_id ='$couponid' AND  coupon_data <'$now' AND coupon_count > 0 ", null,false);
-if ($checkcoupon > 0) {
- $TotalPrice =$TotalPrice -($TotalPrice*$coupondiscount /100);  
- $stmt= $con->prepare("UPDATE `coupon` SET `coupon_count`=`coupon_count`-1 WHERE coupon_id ='$couponid'");
- $stmt->execute();
-}
+// if ($paymentmethod==1) {
+//     payment($TotalPrice,$currency);
+// }
+// $now =date("Y-m-d H:i:s");
+// $stmt= $con->prepare("SELECT * FROM  coupon  WHERE coupon_name ='$couponName'  AND coupon_data <'$now' AND copon_endDate >'$now'  AND coupon_count > 0  AND copon_maxuser > 0 ");
+
+// $stmt-> execute();
+// $count = $stmt-> rowCount();
+
+
+
+// if ($count > 0) {
+//  $TotalPrice =$TotalPrice -($TotalPrice*$coupondiscount /100);  
+//  $stmt= $con->prepare("UPDATE `coupon` SET `coupon_count`=`coupon_count`-1 WHERE coupon_id ='$couponid'");
+//  $stmt->execute();
+// }
 
 $data= array(
 "orders_userid"=> $userid,
@@ -34,7 +45,8 @@ $data= array(
 "orders_price"=> $orderprice,
 "orders_coupon"=> $couponid,
 "order_Toatalprice"=>$TotalPrice,
-"orders_paymentmets"=> $paymentmethod
+"orders_paymentmets"=> $paymentmethod,
+"player_id"=>$playerId
 );
 
 
